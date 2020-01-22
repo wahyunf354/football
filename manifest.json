@@ -1,13 +1,12 @@
 {
-  "name": "Football Pocket",
-  "short_name": "FPocket",
+  "name": "Football WNF",
+  "short_name": "FWNF",
   "description": "Free Football Apps",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#f57c00",
-  "theme_color": "#f57c00",
-  "icons": [
-    {
+  "background_color": "#7e57c2",
+  "theme_color": "#7e57c2",
+  "icons": [{
       "src": "/icon/icon-48.png",
       "sizes": "48x48",
       "type": "image/png"
