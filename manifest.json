@@ -5,8 +5,8 @@
   "description": "Free Football Apps",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#7e57c2",
-  "theme_color": "#7e57c2",
+  "background_color": "#fb8c00",
+  "theme_color": "#fb8c00",
   "icons": [{
       "src": "/icon/icon-48.png",
       "sizes": "48x48",
