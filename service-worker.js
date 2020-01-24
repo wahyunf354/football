@@ -1,4 +1,4 @@
-const CACHE_NAME = "football-apps-v2.6.5.3";
+const CACHE_NAME = "football-apps-v3.3";
 const urlsToCache = [
     "/",
     "/index.html",
@@ -105,4 +105,26 @@ self.addEventListener('notificationclick', (event) => {
             console.log(`Action yang ditekan tidak dikenali ${event.action}`);
             break;
     }
+});
+
+
+self.addEventListener('push', event => {
+    var body;
+    if (event.data) {
+        body = event.data.text();
+    } else {
+        body = 'Push message no payload';
+    }
+    var options = {
+        body: body,
+        icon: 'icon/icon-96.png',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+        }
+    };
+    event.waitUntil(
+        self.registration.showNotification('Push Notification', options)
+    );
 });

@@ -40,16 +40,18 @@ function getAll() {
   });
 }
 
-function getById(id) {
-  return new Promise(function (resolve, reject) {
-    idbPromised
-      .then(function (db) {
-        var tx = db.transaction("teams", "readonly");
-        var store = tx.objectStore("teams");
-        return store.get(id);
-      })
-      .then(function (team) {
-        resolve(team);
+function deleteTeam(team) {
+  idbPromised
+    .then(function (db) {
+      var tx = db.transaction("teams", "readwrite");
+      var store = tx.objectStore("teams");
+      console.log(team);
+      store.delete(team);
+      return tx.complete;
+    })
+    .then(function () {
+      M.toast({
+        html: "Data berhasil dihapus"
       });
-  });
+    })
 }

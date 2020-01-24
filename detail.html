@@ -46,8 +46,8 @@
   <!-- Navigasi -->
   <nav class="deep-purple lighten-1" role="navigation">
     <div class="nav-wrapper container">
-      <a href="./#team" class="brand-logo" id="logo-container">Football WNF</a>
-      <a href="./#team" class="sidenav-trigger" data-target="nav-mobile">
+      <a href="./#team" class="brand-logo href" id="logo-container">Football WNF</a>
+      <a href="./#team" class="sidenav-trigger href" data-target="nav-mobile">
         <i class="material-icons">arrow_back</i>
       </a>
       <ul class="topnav right hide-on-med-and-down"></ul>
@@ -63,7 +63,7 @@
   <!-- menambahjan tombol save -->
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large red" id="save">
-      <i class="large material-icons">save</i>
+      <i class="large material-icons icon">save</i>
     </a>
   </div>
   <!-- js -->
@@ -72,6 +72,10 @@
   <script src="js/api.js"></script>
   <script src="js/idb.js"></script>
   <script src="js/db.js"></script>
+  <script src="js/notif.js"></script>
+
+
+
 
   <script>
     // REGISTER SERVICE WORKER
@@ -93,19 +97,42 @@
       let urlParams = new URLSearchParams(window.location.search);
       let isFromSaved = urlParams.get("saved");
       const save = document.getElementById("save");
+      const href = document.querySelectorAll('.href');
+      const icon = document.querySelector('.icon');
       if (isFromSaved) {
-        save.style.display = 'none';
+        icon.innerHTML = "delete";
         getSavedTeamDetail();
-      } else {
-        const item = getTeamsDetail();
-      }
-      save.onclick = () => {
-        console.log("tombol FAB diclick");
-        item
-          .then(function (data) {
-            saveForLater(data)
+        href.forEach(h => {
+          h.removeAttribute('href');
+          h.setAttribute('href', "./#favorit");
+        })
+        var itemD = getAll();
+        save.setAttribute('href', './#favorit');
+        save.onclick = () => {
+          itemD.then(function (data) {
+            let urlParams = new URLSearchParams(window.location.search);
+            let id1 = urlParams.get("id");
+            data.forEach(d => {
+              if (d.id == id1) {
+                deleteTeam(d.id);
+
+              }
+            });
+
           })
-      };
+        }
+
+      } else {
+        var item = getTeamsDetail();
+        save.onclick = () => {
+          console.log("tombol FAB diclick");
+          item
+            .then(function (data) {
+              saveForLater(data)
+            })
+        };
+      }
+
     });
   </script>
 </body>

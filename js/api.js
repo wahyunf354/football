@@ -293,62 +293,68 @@ function getSavedTeamDetail() {
     var urlParams = new URLSearchParams(window.location.search);
     var idParam = urlParams.get("id");
 
-    getById(idParam)
+    getAll()
         .then(function (data) {
             console.log(data);
-            let competitionsAc = ``;
-            let squads = ``;
+            for (let i = 0; i <= data.length; i++) {
+                if (data[i].id == idParam) {
+                    let competitionsAc = ``;
+                    let squads = ``;
 
-            data.activeCompetitions.forEach(function (com) {
-                competitionsAc += `
-                    <li>${com.name}</li>
-                `;
-            });
+                    data[i].activeCompetitions.forEach(function (com) {
+                        competitionsAc += `
+                            <li>${com.name}</li>
+                        `;
+                    });
 
-            data.squad.forEach(function (sq) {
-                squads += `
-                <div class="col s12 m4">     
-                    <div class="card mg1">
-                    <h6>${sq.name}</h6>
+                    data[i].squad.forEach(function (sq) {
+                        squads += `
+                        <div class="col s12 m4">     
+                            <div class="card mg1">
+                            <h6>${sq.name}</h6>
+                                <ul>
+                                <li>Position: ${sq.position}</li>
+                                <li>Country Of Birth: ${sq.countryOfBirth}</li>
+                                <li>Nationality: ${sq.nationality}</li>
+                                <li>shirtNumber: ${sq.shirtNumber}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        `;
+                    });
+
+
+                    let detail = `
+                    <div class="row mg">
+                      <div class="col s12 m4">
+                        <img src="${data[i].crestUrl.replace(/^http:\/\//i, 'https://')}" class="responsive-img">
+                      </div>
+                      <div class="col s12 m4">
+                        <h3>${data[i].name}</h3>
                         <ul>
-                        <li>Position: ${sq.position}</li>
-                        <li>Country Of Birth: ${sq.countryOfBirth}</li>
-                        <li>Nationality: ${sq.nationality}</li>
-                        <li>shirtNumber: ${sq.shirtNumber}</li>
+                          <li>Address: ${data[i].address}</li>
+                          <li>Club Colors: ${data[i].clubColors}</li>
+                          <li>Founded: ${data[i].founded}</li>
+                          <li><a href="${data[i].website}"></a>Website: ${data[i].website}</li>
                         </ul>
+                      </div>
+                      <div class="col s12 m4">
+                        <h5>Active Competitions</h5>
+                        <ul>
+                          ${competitionsAc}
+                        </ul>
+                      </div>
                     </div>
-                </div>
-                `;
-            });
+                    <div class="row">
+                    <h5>Squad ${data[i].name}</h5>
+                        ${squads}
+                    </div>
+                    `;
+                    document.getElementById("body-content").innerHTML = detail;
+                    break;
+                }
+            }
 
-
-            let detail = `
-            <div class="row mg">
-              <div class="col s12 m4">
-                <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" class="responsive-img">
-              </div>
-              <div class="col s12 m4">
-                <h3>${data.name}</h3>
-                <ul>
-                  <li>Address: ${data.address}</li>
-                  <li>Club Colors: ${data.clubColors}</li>
-                  <li>Founded: ${data.founded}</li>
-                  <li><a href="${data.website}"></a>Website: ${data.website}</li>
-                </ul>
-              </div>
-              <div class="col s12 m4">
-                <h5>Active Competitions</h5>
-                <ul>
-                  ${competitionsAc}
-                </ul>
-              </div>
-            </div>
-            <div class="row">
-            <h5>Squad ${data.name}</h5>
-                ${squads}
-            </div>
-            `;
-            document.getElementById("body-content").innerHTML = detail;
         })
 
 }

@@ -1,5 +1,6 @@
 {
   "name": "Football WNF",
+  "gcm_sender_id": "326407799937",
   "short_name": "FWNF",
   "description": "Free Football Apps",
   "start_url": "/index.html",
