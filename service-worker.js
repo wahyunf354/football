@@ -1,4 +1,4 @@
-const CACHE_NAME = "football-apps-v2.3.4";
+const CACHE_NAME = "football-apps-v2.6.5.3";
 const urlsToCache = [
     "/",
     "/index.html",
@@ -10,6 +10,7 @@ const urlsToCache = [
     "/js/nav.js",
     "/js/db.js",
     "/js/idb.js",
+    "/js/notif.js",
     "/pages/standing.html",
     "/pages/team.html",
     "/pages/favorit.html",
@@ -80,5 +81,28 @@ self.addEventListener("fetch", function (event) {
                 return response || fetch(event.request);
             })
         )
+    }
+});
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close(); // agar ketika penguna menekan manakan notifikasi akan hilang
+    if (!event.action) {
+        // Penguna menyentuh area notifikasi diluar action
+        console.log("Notifikasi Click");
+        return;
+    }
+
+    switch (event.action) {
+        case 'yes-action':
+            console.log("Penguna mengeklik action yes");
+            //buka tab baru
+            clients.openWindow('https://google.com');
+            break;
+        case 'no.action':
+            console.log('Penguna menekan action no');
+            break;
+        default:
+            console.log(`Action yang ditekan tidak dikenali ${event.action}`);
+            break;
     }
 });

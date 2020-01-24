@@ -136,11 +136,11 @@ function showTeams(data) {
         if (team.crestUrl == null) {
             img += "../icon/icon-192.png";
         } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/7/78/Nkmaribor_2013.png') {
-            img += 'https://upload.wikimedia.org/wikipedia/en/7/78/Nkmaribor_2013.png';
+            img += "../icon/icon-192.png";
         } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/0/06/APOELnew.png') {
-            img += 'https://upload.wikimedia.org/wikipedia/en/0/06/APOELnew.png';
+            img += "../icon/icon-192.png";
         } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/b/b0/Riga_FC_logo.png') {
-            img += 'https://upload.wikimedia.org/wikipedia/en/b/b0/Riga_FC_logo.png';
+            img += "../icon/icon-192.png";
         } else {
             img += team.crestUrl.replace(/^http:\/\//i, 'https://')
         }
@@ -248,4 +248,107 @@ function showTeamsDetail(data) {
     </div>
     `;
     document.getElementById("body-content").innerHTML = detail;
+}
+
+function getSavedTeams() {
+    getAll()
+        .then(teams => {
+            console.log(teams);
+            let teamHtml = '';
+            teams.forEach(team => {
+                let img = '';
+                if (team.crestUrl == null) {
+                    img += "../icon/icon-192.png";
+                } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/7/78/Nkmaribor_2013.png') {
+                    img += 'https://upload.wikimedia.org/wikipedia/en/7/78/Nkmaribor_2013.png';
+                } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/0/06/APOELnew.png') {
+                    img += 'https://upload.wikimedia.org/wikipedia/en/0/06/APOELnew.png';
+                } else if (team.crestUrl == 'https://upload.wikimedia.org/wikipedia/en/b/b0/Riga_FC_logo.png') {
+                    img += 'https://upload.wikimedia.org/wikipedia/en/b/b0/Riga_FC_logo.png';
+                } else {
+                    img += team.crestUrl.replace(/^http:\/\//i, 'https://')
+                }
+                teamHtml += `
+                <div class="col s12 m3">
+                <div class="card">
+                <div class="card-image">
+                <a href="./detail.html?id=${team.id}&saved=true">
+                    <img src="${img}">
+                </a>
+                </div>
+                <div class="card-content">
+                    <span class="card-title black-text">${team.name}</span>
+                    <p>Found    :${team.founded}</p>
+                    <p>Address  :${team.area.name}</p>
+                </div>
+                </div>
+                </div>
+                `;
+            });
+            document.getElementById("body-content").innerHTML = teamHtml;
+        })
+}
+
+function getSavedTeamDetail() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var idParam = urlParams.get("id");
+
+    getById(idParam)
+        .then(function (data) {
+            console.log(data);
+            let competitionsAc = ``;
+            let squads = ``;
+
+            data.activeCompetitions.forEach(function (com) {
+                competitionsAc += `
+                    <li>${com.name}</li>
+                `;
+            });
+
+            data.squad.forEach(function (sq) {
+                squads += `
+                <div class="col s12 m4">     
+                    <div class="card mg1">
+                    <h6>${sq.name}</h6>
+                        <ul>
+                        <li>Position: ${sq.position}</li>
+                        <li>Country Of Birth: ${sq.countryOfBirth}</li>
+                        <li>Nationality: ${sq.nationality}</li>
+                        <li>shirtNumber: ${sq.shirtNumber}</li>
+                        </ul>
+                    </div>
+                </div>
+                `;
+            });
+
+
+            let detail = `
+            <div class="row mg">
+              <div class="col s12 m4">
+                <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" class="responsive-img">
+              </div>
+              <div class="col s12 m4">
+                <h3>${data.name}</h3>
+                <ul>
+                  <li>Address: ${data.address}</li>
+                  <li>Club Colors: ${data.clubColors}</li>
+                  <li>Founded: ${data.founded}</li>
+                  <li><a href="${data.website}"></a>Website: ${data.website}</li>
+                </ul>
+              </div>
+              <div class="col s12 m4">
+                <h5>Active Competitions</h5>
+                <ul>
+                  ${competitionsAc}
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+            <h5>Squad ${data.name}</h5>
+                ${squads}
+            </div>
+            `;
+            document.getElementById("body-content").innerHTML = detail;
+        })
+
 }

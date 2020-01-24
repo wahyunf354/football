@@ -90,13 +90,20 @@
       console.log("ServiceWorker belum didukung browser ini.");
     }
     document.addEventListener('DOMContentLoaded', () => {
-      const item = getTeamsDetail();
+      let urlParams = new URLSearchParams(window.location.search);
+      let isFromSaved = urlParams.get("saved");
       const save = document.getElementById("save");
+      if (isFromSaved) {
+        save.style.display = 'none';
+        getSavedTeamDetail();
+      } else {
+        const item = getTeamsDetail();
+      }
       save.onclick = () => {
         console.log("tombol FAB diclick");
         item
-          .then(function (team) {
-            saveForLater(team)
+          .then(function (data) {
+            saveForLater(data)
           })
       };
     });
