@@ -108,7 +108,7 @@ function tables(table, group) {
 
 function getAllTeams() {
     if ("caches" in window) {
-        caches.match(ENDPOINT_COMPETITION).then(function (response) {
+        caches.match(ENDPOINT_TEAM).then(function (response) {
             if (response) {
                 response.json().then(function (data) {
                     console.log("TEAM Data: " + data);
@@ -166,8 +166,10 @@ function showTeams(data) {
 
 function getTeamsDetail() {
     return new Promise(function (resolve, reject) {
+        var urlParams = new URLSearchParams(window.location.search);
+        var idParam = urlParams.get("id");
         if ("caches" in window) {
-            caches.match(ENDPOINT_COMPETITION).then(function (response) {
+            caches.match(ENDPOINT_TEAM_DETAIL + idParam).then(function (response) {
                 if (response) {
                     response.json().then(function (data) {
                         console.log("Detail Data: " + data);
@@ -177,9 +179,6 @@ function getTeamsDetail() {
                 }
             })
         }
-
-        var urlParams = new URLSearchParams(window.location.search);
-        var idParam = urlParams.get("id");
 
         fetchAPI(ENDPOINT_TEAM_DETAIL + idParam)
             .then(data => {

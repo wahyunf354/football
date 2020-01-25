@@ -1,4 +1,4 @@
-const CACHE_NAME = "football-apps-v3.3";
+const CACHE_NAME = "football-apps-v4";
 const urlsToCache = [
     "/",
     "/index.html",
