@@ -10,11 +10,11 @@ workbox.precaching.precacheAndRoute([{
     },
     {
         url: "/index.html",
-        revision: '1'
+        revision: '3'
     },
     {
         url: '/detail.html',
-        revision: '1'
+        revision: '3'
     },
     {
         url: '/nav.html',
@@ -131,6 +131,10 @@ workbox.precaching.precacheAndRoute([{
     {
         url: '/favicomatic/mstile-310x310.png',
         revision: '1'
+    },
+    {
+        url: '/js/api.js',
+        revision: '1'
     }
 
 ]);
@@ -143,9 +147,18 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-    new RegExp('/js/api.js'),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'api'
+    new RegExp('https://api.football-data.org'),
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'api-data',
+        plugins: [
+            new workbox.cacheableResponse.Plugin({
+                statuses: [0, 200],
+            }),
+            new workbox.expiration.Plugin({
+                maxAgeSeconds: 60 * 60 * 24,
+                maxEntries: 30,
+            }),
+        ]
     })
 )
 
