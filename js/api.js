@@ -145,18 +145,18 @@ function showTeams(data) {
             img += team.crestUrl.replace(/^http:\/\//i, 'https://')
         }
         dataTeams += `
-        <div class="col s12 m3">
-                <div class="card">
-                <div class="card-image">
-                <a href="./detail.html?id=${team.id}">
-                    <img src="${img}">
-                </a>
-                </div>
-                <div class="card-content">
-                    <span class="card-title black-text">${team.name}</span>
-                    <p>Found    :${team.founded}</p>
-                    <p>Address  :${team.area.name}</p>
-                </div>
+        <div class="col s12 m6 l4">
+                <div class="card large">
+                    <div class="card-image">
+                    <a href="./detail.html?id=${team.id}">
+                        <img class="responsive-img" src="${img}">
+                    </a>
+                    </div>
+                    <div class="card-content ">
+                        <span class="card-title black-text">${team.name}</span>
+                        <p>Found    :${team.founded}</p>
+                        <p>Address  :${team.area.name}</p>
+                    </div>
                 </div>
         </div>
         `;
@@ -222,7 +222,7 @@ function showTeamsDetail(data) {
 
     let detail = `
     <div class="row mg">
-      <div class="col s12 m4">
+      <div class="col s12 m6 l4">
         <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" class="responsive-img">
       </div>
       <div class="col s12 m4">
@@ -234,7 +234,7 @@ function showTeamsDetail(data) {
           <li><a href="${data.website}"></a>Website: ${data.website}</li>
         </ul>
       </div>
-      <div class="col s12 m4">
+      <div class="col s12 m6 l4">
         <h5>Active Competitions</h5>
         <ul>
           ${competitionsAc}
@@ -268,14 +268,14 @@ function getSavedTeams() {
                     img += team.crestUrl.replace(/^http:\/\//i, 'https://')
                 }
                 teamHtml += `
-                <div class="col s12 m3">
-                <div class="card">
+                <div class="col s12 m6 l4">
+                <div class="card large">
                 <div class="card-image">
                 <a href="./detail.html?id=${team.id}&saved=true">
-                    <img src="${img}">
+                    <img class="responsive-img" src="${img}">
                 </a>
                 </div>
-                <div class="card-content">
+                <div class="card-content>
                     <span class="card-title black-text">${team.name}</span>
                     <p>Found    :${team.founded}</p>
                     <p>Address  :${team.area.name}</p>
@@ -308,7 +308,7 @@ function getSavedTeamDetail() {
 
                     data[i].squad.forEach(function (sq) {
                         squads += `
-                        <div class="col s12 m4">     
+                        <div class="col s12 m6 l4">     
                             <div class="card mg1">
                             <h6>${sq.name}</h6>
                                 <ul>
@@ -325,10 +325,10 @@ function getSavedTeamDetail() {
 
                     let detail = `
                     <div class="row mg">
-                      <div class="col s12 m4">
+                      <div class="col s12 m6 l4">
                         <img src="${data[i].crestUrl.replace(/^http:\/\//i, 'https://')}" class="responsive-img">
                       </div>
-                      <div class="col s12 m4">
+                      <div class="col s12 m6 l4">
                         <h3>${data[i].name}</h3>
                         <ul>
                           <li>Address: ${data[i].address}</li>
@@ -337,7 +337,7 @@ function getSavedTeamDetail() {
                           <li><a href="${data[i].website}"></a>Website: ${data[i].website}</li>
                         </ul>
                       </div>
-                      <div class="col s12 m4">
+                      <div class="col s12 m6 l4">
                         <h5>Active Competitions</h5>
                         <ul>
                           ${competitionsAc}

@@ -1,0 +1,12 @@
+.mg1 {
+  margin: 10px 10px 10px 10px;
+}
+
+.mg {
+  margin-top: 20px;
+}
+
+.float {
+  background-color: orange;
+  border-radius: 15px !important;
+}
