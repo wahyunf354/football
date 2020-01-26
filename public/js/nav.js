@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.open("GET", "nav.html", true);
         xhttp.send();
     }
+    //menambahkan animasi preloader manghilang
+    document.querySelector('.loading').delay(1700).fadeOut('slow');
+    document.querySelector('.preloader-wrapper').delay(1700)
+        .fadeOut();
 
     // Load pages content
     var page = window.location.hash.substr(1);

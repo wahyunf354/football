@@ -10,11 +10,11 @@ workbox.precaching.precacheAndRoute([{
     },
     {
         url: "/index.html",
-        revision: '3'
+        revision: '4'
     },
     {
         url: '/detail.html',
-        revision: '3'
+        revision: '4'
     },
     {
         url: '/nav.html',
@@ -30,7 +30,7 @@ workbox.precaching.precacheAndRoute([{
     },
     {
         url: '/js/nav.js',
-        revision: '1'
+        revision: '2'
     },
     {
         url: '/js/idb.js',
@@ -150,7 +150,7 @@ workbox.precaching.precacheAndRoute([{
         revision: '2'
     }, {
         url: '/css/style.css',
-        revision: '1'
+        revision: '2'
     }
 
 ], {
