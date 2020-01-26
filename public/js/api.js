@@ -254,6 +254,12 @@ function getSavedTeams() {
         .then(teams => {
             console.log(teams);
             let teamHtml = '';
+            let noneTeam = `
+                <h4 class="center orange-text" >Team Favorit Belum Ada</h4>
+            `
+            if (teams.length == 0) {
+                document.getElementById("body-content").innerHTML = noneTeam;
+            }
             teams.forEach(team => {
                 let img = '';
                 if (team.crestUrl == null) {

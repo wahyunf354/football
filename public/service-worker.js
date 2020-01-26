@@ -134,33 +134,59 @@ workbox.precaching.precacheAndRoute([{
     },
     {
         url: '/js/api.js',
+        revision: '2'
+    },
+    {
+        url: '/manifest.json',
+        revision: '2'
+    }, {
+        url: '/pages/team.html',
+        revision: '1'
+    }, {
+        url: '/pages/standing.html',
+        revision: '1'
+    }, {
+        url: '/pages/favorit.html',
+        revision: '2'
+    }, {
+        url: '/css/style.css',
         revision: '1'
     }
 
-]);
-
-workbox.routing.registerRoute(
-    new RegExp('/pages/'),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'pages'
-    })
-);
+], {
+    ignoreUrlParametersMatching: [/.*/]
+});
 
 workbox.routing.registerRoute(
     new RegExp('https://api.football-data.org'),
-    new workbox.strategies.NetworkFirst({
+    workbox.strategies.staleWhileRevalidate({
         cacheName: 'api-data',
         plugins: [
             new workbox.cacheableResponse.Plugin({
-                statuses: [0, 200],
+                statuses: [200],
             }),
             new workbox.expiration.Plugin({
                 maxAgeSeconds: 60 * 60 * 24,
                 maxEntries: 30,
             }),
+
         ]
     })
 )
+
+//Cache Images
+workbox.routing.registerRoute(
+    /\.(?:png|gif|jpg|jpeg|svg)$/,
+    workbox.strategies.cacheOnly({
+        cacheName: 'caches-images',
+        plugins: [
+            new workbox.expiration.Plugin({
+                maxEntries: 60,
+                maxAgeSeconds: 30 * 14 * 60 * 60,
+            }),
+        ],
+    }),
+);
 
 self.addEventListener('notificationclick', (event) => {
     event.notification.close(); // agar ketika penguna menekan manakan notifikasi akan hilang
